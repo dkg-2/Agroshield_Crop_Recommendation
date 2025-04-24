@@ -101,7 +101,6 @@
 
 
 
-
 import gradio as gr
 import pickle
 import numpy as np
@@ -123,97 +122,140 @@ def recommend_crop(N, P, K, temperature, humidity, ph, rainfall):
     features = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     features_scaled = scaler.transform(features)
     prediction = model.predict(features_scaled)[0]
-    return f"🌾 Recommended Crop: **{crop_dict.get(prediction, 'Unknown')}**"
+    return f"🌱 **{crop_dict.get(prediction, 'Unknown')}** is the recommended crop"
 
-# Modern CSS matching web app
+# Green theme CSS matching web app
 custom_css = """
 :root {
-    --primary: #3b82f6;
-    --primary-hover: #2563eb;
+    --primary: #2e7d32;  /* Material Green 800 */
+    --primary-hover: #1b5e20;  /* Material Green 900 */
+    --surface: #f5fbf6;  /* Light green background */
+    --border: #c8e6c9;   /* Subtle green border */
 }
 
 body {
-    background: #f8fafc;
+    background: var(--surface);
     font-family: 'Inter', system-ui, sans-serif;
 }
 
 .gradio-container {
     max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 2.5rem;
     background: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
 }
 
 .dark .gradio-container {
-    background: #1e293b;
+    background: #1a3221;
+    border-color: #2d4d38;
 }
 
 .input-group {
     background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 1.5rem;
+    padding: 1.75rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
 }
 
 .input-label {
-    font-weight: 500;
-    color: #334155;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
     display: block;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
 }
 
 input[type="number"] {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.375rem;
-    background: #f8fafc;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid var(--border);
+    border-radius: 0.75rem;
+    background: #f8faf9;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+input[type="number"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+    background: white;
 }
 
 button {
     background: var(--primary) !important;
     color: white !important;
-    padding: 0.75rem 1.5rem !important;
-    border-radius: 0.5rem !important;
+    padding: 1rem 2.5rem !important;
+    border-radius: 0.875rem !important;
     transition: all 0.2s !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    border: none !important;
 }
 
 button:hover {
     background: var(--primary-hover) !important;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
 }
 
 .output-text {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1e293b;
-    padding: 1.5rem;
-    background: #f1f5f9;
-    border-radius: 0.5rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 1.75rem;
+    background: #e8f5e9;
+    border-radius: 1rem;
     text-align: center;
+    border: 2px dashed var(--border);
+    margin: 1.5rem 0;
+}
+
+.markdown h1 {
+    color: var(--primary) !important;
+    font-size: 2rem !important;
+    margin-bottom: 0.75rem !important;
+    text-align: center;
+}
+
+.markdown p {
+    color: #4a6350 !important;
+    margin-bottom: 2rem !important;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.parameter-list {
+    color: #4a6350;
+    padding: 1.5rem;
+    background: #f0faf1;
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
 }
 """
 
 with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
     with gr.Column(elem_classes="gradio-container"):
         gr.Markdown("""
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">Crop Recommendation System</h1>
-            <p class="text-gray-600">Input soil and climate parameters for AI-powered recommendations</p>
+        <div style="margin-bottom: 2.5rem">
+            <h1 style="font-size: 2.25rem; margin-bottom: 0.5rem">🌱 Crop Recommendation</h1>
+            <p style="font-size: 1.1rem">AI-powered agricultural insights for optimal crop selection</p>
         </div>
         """)
         
         with gr.Column(elem_classes="input-group"):
-            gr.Markdown("### Soil Nutrients")
+            gr.Markdown("### Soil Nutrient Levels")
             with gr.Row():
                 N = gr.Number(label="Nitrogen (N)", value=50, minimum=0, maximum=140)
                 P = gr.Number(label="Phosphorus (P)", value=50, minimum=5, maximum=145)
                 K = gr.Number(label="Potassium (K)", value=50, minimum=5, maximum=205)
             
-            gr.Markdown("### Environmental Factors")
+            gr.Markdown("### Environmental Conditions")
             with gr.Row():
                 temp = gr.Number(label="Temperature (°C)", value=25.0, minimum=8.0, maximum=43.0)
                 humidity = gr.Number(label="Humidity (%)", value=60.0, minimum=14.0, maximum=100.0)
@@ -225,14 +267,18 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
         output = gr.Markdown(elem_classes="output-text")
         
         gr.Markdown("""
-        **Parameter Ranges**  
-        - Nitrogen (N): 0-140  
-        - Phosphorus (P): 5-145  
-        - Potassium (K): 5-205  
-        - Temperature: 8-43°C  
-        - Humidity: 14-100%  
-        - pH: 3.5-9.9  
-        - Rainfall: 20-300mm
+        <div class="parameter-list">
+            <h3 style="color: var(--primary); margin-bottom: 1rem">📏 Parameter Ranges</h3>
+            <div style="columns: 2; gap: 2rem">
+                <p>🌿 Nitrogen: 0-140</p>
+                <p>🌿 Phosphorus: 5-145</p>
+                <p>🌿 Potassium: 5-205</p>
+                <p>🌡️ Temperature: 8-43°C</p>
+                <p>💧 Humidity: 14-100%</p>
+                <p>⚗️ pH Level: 3.5-9.9</p>
+                <p>🌧️ Rainfall: 20-300mm</p>
+            </div>
+        </div>
         """)
         
         gr.Button("Generate Recommendation", variant="primary").click(
