@@ -90,7 +90,7 @@ Based on these inputs, it predicts the **best crop to grow** under the given con
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/AgroShield-Crop-Recommendation.git
+git clone https://github.com/dkg-2/AgroShield-Crop-Recommendation.git
 cd AgroShield-Crop-Recommendation
 pip install -r requirements.txt
 python app/app.py
