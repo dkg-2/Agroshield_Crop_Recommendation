@@ -35,6 +35,13 @@ Based on these inputs, it predicts the **best crop to grow** under the given con
 
 ---
 
+
+## 📦 Dataset
+
+- **Name**: Crop Recommendation Dataset
+- **Source**: [Kaggle - Atharva Ingle](https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset)
+
+
 ## 🔍 Use Case
 
 ✅ Helps farmers plan crop rotation based on current soil and weather  
