@@ -66,6 +66,15 @@ Based on these inputs, it predicts the **best crop to grow** under the given con
 
 ## 🚀 Try It Out
 
+- 📓 **Model Training Notebook (Colab)**:
+  notebook 1
+  👉 [Open in Colab](https://colab.research.google.com/drive/11ry8pNNEOhGEAAx6I9f4ZN_nxuyunosD?usp=sharing)
+  notebook 2
+  👉 [Open in Colab](https://colab.research.google.com/drive/1-j6FyPZvle3kbR5O8LtEiwkATbCafPr6?usp=sharing)
+    
+    
+
+  
 👉 **[Live Demo on Hugging Face Spaces](https://huggingface.co/spaces/dkg-2/Agroshield_Crop_Recommendation)**
 
 ---
